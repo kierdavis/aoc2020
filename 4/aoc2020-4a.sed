@@ -63,34 +63,3 @@ $!d
 # Otherwise, we've consumed all the input. Fetch the valid passport count from the
 # hold space into the pattern space so that sed will implicitly print it.
 g
-#!/usr/bin/env -S sed -Ef
-:coalesce
-$bvalidate
-N
-/[^\n]$/bcoalesce
-:validate
-/byr:/!bnext
-/iyr:/!bnext
-/eyr:/!bnext
-/hgt:/!bnext
-/hcl:/!bnext
-/ecl:/!bnext
-/pid:/!bnext
-g
-s/$/+/
-tcarry
-:carry
-s/9\+/\+0/;tcarry
-s/(^|0)\+/1/
-s/1\+/2/
-s/2\+/3/
-s/3\+/4/
-s/4\+/5/
-s/5\+/6/
-s/6\+/7/
-s/7\+/8/
-s/8\+/9/
-h
-:next
-$!d
-g
