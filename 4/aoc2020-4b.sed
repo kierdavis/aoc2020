@@ -1,0 +1,45 @@
+#!/usr/bin/env -S sed -Ef
+1{
+  x
+  s/.*/0/
+  x
+}
+:coalesce
+$bvalidate
+N
+/[^\n]$/bcoalesce
+:validate
+/byr:/!bnext
+/iyr:/!bnext
+/eyr:/!bnext
+/hgt:/!bnext
+/hcl:/!bnext
+/ecl:/!bnext
+/pid:/!bnext
+s/byr:(19[2-9][0-9]|200[0-2])//
+s/iyr:20(1[0-9]|20)//
+s/eyr:20(2[0-9]|30)//
+s/hgt:(1([5-8][0-9]|9[0-3])cm|(59|6[0-9]|7[0-6])in)//
+s/hcl:#[0-9a-f]{6}//
+s/ecl:(amb|blu|brn|gry|grn|hzl|oth)//
+s/pid:[0-9]{9}//
+s/cid:[0-9]+//
+/\S/bnext
+g
+s/$/+/
+tcarry
+:carry
+s/9\+/\+0/;tcarry
+s/(^|0)\+/1/
+s/1\+/2/
+s/2\+/3/
+s/3\+/4/
+s/4\+/5/
+s/5\+/6/
+s/6\+/7/
+s/7\+/8/
+s/8\+/9/
+h
+:next
+$!d
+g
