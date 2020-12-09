@@ -1,3 +1,11 @@
 input.txt
+
+# Rust
 target
+
+# APL
 .apl.history
+
+# Haskell
+.stack-work/
+*.cabal
